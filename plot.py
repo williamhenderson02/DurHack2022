@@ -19,9 +19,11 @@ col1= "red"
 col2 = "green"
 
 w = 0.3
-w2= 0.1
+w2= 0.03
 
 print(prices)
+
+plt.figure(figsize =(8,4))
 
 plt.bar(up.index,up.close-up.open,w,bottom = up.open, color = col2)
 plt.bar(up.index,up.high-up.close,w2,bottom = up.close, color = col2)
