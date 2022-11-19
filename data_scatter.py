@@ -7,11 +7,16 @@ ws.send('{"method": "SUBSCRIBE","params": ["btcusdt@trade"],"id": 1}')
 
 while True:
 
+    values = []
+
     response = ws.recv()
     data = json.loads(response)
     try:
-        
-        print(data["p"])
+        time = data["T"]
+        price = data["p"]
+        values.append(time)
+        values.append(float(price))
+        print(values)
 
     except:
         print("no p")
