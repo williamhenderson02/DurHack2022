@@ -5,14 +5,14 @@ from csv import DictWriter,writer
 
 ws = create_connection("wss://stream.binance.com:9443/ws/Bitcoin")
 
-ws.send('{"method": "SUBSCRIBE","params": ["btcusdt@trade"],"id": 1}')
+ws.send('{"method": "SUBSCRIBE","params": ["btcusdt@kline_1s"],"id": 1}')
 
 response = ws.recv()
 data = json.loads(response)
 
-fieldNames = ['Time','Price']
+fieldNames = ['Time','Open','Close','High','Low']
 
-with open('scatter.csv', 'w', encoding='UTF8', newline='') as f:
+with open('candle.csv', 'w', encoding='UTF8', newline='') as f:
     writer = writer(f)
 
     # write the header
@@ -20,18 +20,24 @@ with open('scatter.csv', 'w', encoding='UTF8', newline='') as f:
     f.close()
 
 while True:
-
+    
     values = []
 
     response = ws.recv()
     data = json.loads(response)
-    
-   
-    time = data["T"]
-    price = float(data["p"])
-    
-    dict = {'Time':time, 'Price':price}
-    with open('scatter.csv','a') as f_object:
+
+    kline = data["k"]
+    open_time = kline["t"]
+    close_time = kline["T"]
+    open_price = kline["o"]
+    close_price = kline["c"]
+    high = kline["h"]
+    low = kline["l"]
+
+    time = (open_time + close_time) /2
+
+    dict = {'Time':time, 'Open' : open_price, 'Close' : close_price ,'High' : high ,'Low' : low}
+    with open('candle.csv','a') as f_object:
  
         dictwriter_object = DictWriter(f_object, fieldnames=fieldNames)
 
