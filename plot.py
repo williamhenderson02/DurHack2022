@@ -18,6 +18,29 @@ down = prices[prices.close < prices.open]
 col1= "red"
 col2 = "green"
 
+index = count()
+
+def candle(i):
+    time.append(next(index))
+    time.pop(0)
+    prices.append({'open': [random.randint(0,200) for j in range(20) ],
+'close': [random.randint(0,200) for j in range(20) ],
+'high': [200 for j in range(20) ],
+'low': [0 for j in range(20) ]}, ignore_index = True)
+    prices.T.pop(0)
+    
+
+    plt.bar(up.index,up.close-up.open,w,bottom = up.open, color = col2)
+    plt.bar(up.index,up.high-up.close,w2,bottom = up.close, color = col2)
+    plt.bar(up.index,up.low-up.open,w2,bottom = up.open, color = col2)
+
+    plt.bar(down.index,down.close-down.open,w,bottom = down.open, color = col1)
+    plt.bar(down.index,down.high-down.open,w2,bottom = down.open, color = col1)
+    plt.bar(down.index,down.low-down.close,w2,bottom = down.close, color = col1)
+    
+    plt.cla()
+    
+
 w = 0.80
 w2= 0.03
 
@@ -25,14 +48,7 @@ print(prices)
 
 plt.figure(figsize =(8,4))
 
-plt.bar(up.index,up.close-up.open,w,bottom = up.open, color = col2)
-plt.bar(up.index,up.high-up.close,w2,bottom = up.close, color = col2)
-print(up.high-up.close)
-plt.bar(up.index,up.low-up.open,w2,bottom = up.open, color = col2)
-
-plt.bar(down.index,down.close-down.open,w,bottom = down.open, color = col1)
-plt.bar(down.index,down.high-down.open,w2,bottom = down.open, color = col1)
-plt.bar(down.index,down.low-down.close,w2,bottom = down.close, color = col1)
+candleAni = FuncAnimation(plt.gcf(),candle,interval = 1000)
 
 plt.show()
 
