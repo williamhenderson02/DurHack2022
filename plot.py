@@ -18,7 +18,7 @@ down = prices[prices.close < prices.open]
 col1= "red"
 col2 = "green"
 
-w = 0.3
+w = 0.80
 w2= 0.03
 
 print(prices)
