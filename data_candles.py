@@ -33,34 +33,34 @@ def getData():
     high = kline["h"]
     low = kline["l"]
     time = (open_time + close_time) /2
-
-    difference = close_price - open_price
+    '''
+    difference = float(close_price) - float(open_price)
     if difference > 0:
         greenCount += 1
         redCount = 0
         if greenCount == 3:
             greencount = 0
-            '''run meme'''  
+            'run meme'
         elif difference > 2:
-            '''run meme'''
+            'run meme'
         else:
-            '''blank meme'''
+            'blank meme'
     
     elif difference < 0:
         redCount += 1
         greenCount = 0
         if redCount == 3:
             redcount = 0
-            '''run meme'''   
+            'run meme'   
         elif difference < -2:
-            '''run meme'''
+            'run meme'
         else:
-            '''blank meme'''
+            'blank meme'
     
     elif difference == 0:
-        '''run meme'''
+        'run meme'
 
-     
+     '''
 
     return time, open_price, close_price, high, low
 

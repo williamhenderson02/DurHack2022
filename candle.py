@@ -20,7 +20,7 @@ def candle(i):
     up = prices[prices.close >= prices.open]
     down = prices[prices.close < prices.open]
 
-    
+
 
     plt.cla()
     
@@ -31,6 +31,9 @@ def candle(i):
     plt.bar(down.index,down.close-down.open,w,bottom = down.open, color = col1)
     plt.bar(down.index,down.high-down.open,w2,bottom = down.open, color = col1)
     plt.bar(down.index,down.low-down.close,w2,bottom = down.close, color = col1)
+
+    #plt.bar(0,1,0,bottom = 16800)
+    #plt.bar(0,1,0,bottom = 17000)
     plt.savefig('candles.png')
     
     
