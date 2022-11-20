@@ -44,7 +44,8 @@ def scatter(i):
     price_arr = data['Price']
     plt.cla()
     ax.ticklabel_format(style = 'plain')
-    plt.plot(time_arr, price_arr)
+    plt.plot(data.index, price_arr)
+    plt.savefig('scatter.png')
 
 scatAni = FuncAnimation(plt.gcf(),scatter,interval = 1000)
 plt.show()
