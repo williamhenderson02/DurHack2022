@@ -3,20 +3,12 @@ import random
 from matplotlib.animation import FuncAnimation
 import pandas as pd
 
-time = [i for i  in range(0,20,1)]
-val = [random.randint(0,200) for i in range(20) ]
-
-#prices = pd.DataFrame({'Time':[], 'Open': [],'Close': [], 'High': [],'Low': []})
-
-#up = prices[prices.close >= prices.open]
-#down = prices[prices.close < prices.open]
 col1= "red"
 col2 = "green"
 
 
 def candle(i):
     data = pd.read_csv('candle.csv')
-
 
     time_arr = data['Time']
     open_arr = data['Open']
@@ -38,6 +30,7 @@ def candle(i):
     plt.bar(down.index,down.close-down.open,w,bottom = down.open, color = col1)
     plt.bar(down.index,down.high-down.open,w2,bottom = down.open, color = col1)
     plt.bar(down.index,down.low-down.close,w2,bottom = down.close, color = col1)
+    plt.savefig('candles.png')
     
     
     
