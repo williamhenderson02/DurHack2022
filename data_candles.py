@@ -20,7 +20,10 @@ with open('candle.csv', 'w', encoding='UTF8', newline='') as f:
     writer.writerow(fieldNames)
     f.close()
 
-def getData():
+greenCount = 0
+redCount = 0
+
+def getData(greenCount, redCount):
 
     response = ws.recv()
     data = json.loads(response)
@@ -33,36 +36,45 @@ def getData():
     high = kline["h"]
     low = kline["l"]
     time = (open_time + close_time) /2
-    '''
+    
     difference = float(close_price) - float(open_price)
+    print(difference)
     if difference > 0:
         greenCount += 1
         redCount = 0
+        print("green",greenCount)
         if greenCount == 3:
-            greencount = 0
-            'run meme'
+            greenCount = 0
+            with open('memeCodes.txt', 'w') as f:
+                f.write('3Green\n')
         elif difference > 2:
-            'run meme'
+            with open('memeCodes.txt', 'w') as f:
+                f.write('bigGreen\n')
         else:
-            'blank meme'
+            with open('memeCodes.txt', 'w') as f:
+                f.write('blank\n')
     
     elif difference < 0:
         redCount += 1
         greenCount = 0
+        print("red",redCount)
         if redCount == 3:
-            redcount = 0
-            'run meme'   
+            redCount = 0
+            with open('memeCodes.txt', 'w') as f:
+                f.write('3Red\n')   
         elif difference < -2:
-            'run meme'
+            with open('memeCodes.txt', 'w') as f:
+                f.write('bigRed\n')
         else:
-            'blank meme'
+            with open('memeCodes.txt', 'w') as f:
+                f.write('blank\n')
     
     elif difference == 0:
-        'run meme'
+        with open('memeCodes.txt', 'w') as f:
+                f.write('crazyMeme\n')
 
-     '''
 
-    return time, open_price, close_price, high, low
+    return time, open_price, close_price, high, low, greenCount, redCount
 
 def csvApp(time, open_price, close_price, high, low):
     dict = {'Time':time, 'Open' : open_price, 'Close' : close_price ,'High' : high ,'Low' : low}
@@ -75,7 +87,7 @@ def csvApp(time, open_price, close_price, high, low):
         f_object.close()
 
 for i in range(30):
-    time, open_price, close_price, high, low = getData()
+    time, open_price, close_price, high, low, greenCount, redCount= getData(greenCount, redCount)
     csvApp(time, open_price, close_price, high, low)
 
 def csvPop():
@@ -88,7 +100,7 @@ def csvPop():
 
 while True:
 
-    time, open_price, close_price, high, low = getData()
+    time, open_price, close_price, high, low = getData(greenCount, redCount)
     csvApp(time, open_price, close_price, high, low)
     csvPop()
 
