@@ -1,3 +1,97 @@
-<html>
+<!DOCTYPE html>
+<html lang="english">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="refresh" content="1" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Helvetica, sans-serif;
+            margin: 0;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: #45116e;
+            color: rgb(205, 33, 33);
+        }
+
+        .header h1 {
+            font-size: 50px;
+        }
+        
+
+        .row {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+
+        .side {
+            -ms-flex: 30%;
+            /* IE10 */
+            flex: 30%;
+            background-color: #f1f1f1;
+            padding: 20px;
+        }
+
+        .main {
+            -ms-flex: 70%;
+            flex: 70%;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+        }
+
+
+        .img {
+            background-color: #aaa;
+            width: 100%;
+            padding: 20px;
+        }
+
+
+        @media screen and (max-width: 700px) {
+            .row {
+                flex-direction: column;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .navbar design {
+                float: none;
+                width: 100%;
+            }
+        }
+        .memes {float:right}
+        .graphmain {float: left}
     
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>QRT VISUALISATION OF MARKET DATA CHALLENGE</h1>
+        <p>The enhanced way of market data</p>
+        <div class="main">
+            <h2 allign = 'center'>BITCOIN CRYPTOCURRENCY UPDATE</h2>
+        </div>
+    </div>
+    <div class="graphmain">
+        <img src='candles.png' width="700" height="400" />
+    </div>
+    
+    <div class ="memes">
+        <img src='meme.png' width="700" height="400" />
+    </div>
+
+</body>
+
 </html>
