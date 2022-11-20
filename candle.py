@@ -20,6 +20,7 @@ def candle(i):
     up = prices[prices.close >= prices.open]
     down = prices[prices.close < prices.open]
 
+    
 
     plt.cla()
     
