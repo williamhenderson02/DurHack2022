@@ -5,6 +5,7 @@ from csv import DictWriter,writer,reader
 import pandas as pd
 import requests
 import urllib
+import shutil
 
 ws = create_connection("wss://stream.binance.com:9443/ws/Bitcoin")
 
@@ -55,9 +56,9 @@ def getData(greenCount, redCount):
         elif difference > 0.4:
             image_url = "https://i.kym-cdn.com/entries/icons/mobile/000/029/959/Screen_Shot_2019-06-05_at_1.26.32_PM.jpg"
             urllib.request.urlretrieve(image_url, "meme.png")
-        '''else:
-            image_url = "https://memes.co.in/memes/update/uploads/2021/12/InShot_20211209_222013681.jpg"
-            urllib.request.urlretrieve(image_url, "meme.png")'''
+        else:
+            effect = 'audio/silence.mp3'
+            shutil.copyfile(effect, 'audio/meme.mp3')
     
     elif difference < 0:
         redCount += 1
@@ -67,16 +68,25 @@ def getData(greenCount, redCount):
             redCount = 0
             image_url = "https://i.imgur.com/i9JNNvJ.jpg"
             urllib.request.urlretrieve(image_url, "meme.png")
+            effect = 'audio/vine-boom.mp3'
+            shutil.copyfile(effect, 'audio/meme.mp3')
+        
         elif difference < -0.4:
             image_url = "http://images7.memedroid.com/images/UPLOADED333/5fe0de2ad6e08.jpeg"
             urllib.request.urlretrieve(image_url, "meme.png")
-        '''else:
-            image_url = "https://memes.co.in/memes/update/uploads/2021/12/InShot_20211209_222013681.jpg"
-            urllib.request.urlretrieve(image_url, "meme.png")'''
+            effect = 'audio/vine-boom.mp3'
+            shutil.copyfile(effect, 'audio/meme.mp3')
+        
+        else:
+            effect = 'audio/silence.mp3'
+            shutil.copyfile(effect, 'audio/meme.mp3')
     
     else:
         image_url = "https://memes.co.in/memes/update/uploads/2021/12/InShot_20211209_222013681.jpg"
         urllib.request.urlretrieve(image_url, "meme.png")
+        effect = 'audio/vine-boom.mp3'
+        shutil.copyfile(effect, 'audio/meme.mp3')
+        
 
     return time, open_price, close_price, high, low, greenCount, redCount
 
