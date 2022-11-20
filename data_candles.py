@@ -3,6 +3,8 @@ import json
 from time import sleep
 from csv import DictWriter,writer,reader
 import pandas as pd
+import requests
+import urllib
 
 ws = create_connection("wss://stream.binance.com:9443/ws/Bitcoin")
 
@@ -23,6 +25,59 @@ with open('candle.csv', 'w', encoding='UTF8', newline='') as f:
 greenCount = 0
 redCount = 0
 
+'''def getData(greenCount, redCount):
+
+    response = ws.recv()
+    data = json.loads(response)
+
+    kline = data["k"]
+    open_time = kline["t"]
+    close_time = kline["T"]
+    open_price = kline["o"]
+    close_price = kline["c"]
+    high = kline["h"]
+    low = kline["l"]
+    time = (open_time + close_time) /2
+    
+    difference = float(close_price) - float(open_price)
+    #print(difference)
+    if difference > 0:
+        greenCount += 1
+        redCount = 0
+        print("green",greenCount)
+        if greenCount == 3:
+            greenCount = 0
+            with open('memeCodes.txt', 'w') as f: #not bad obama
+                f.write('http://29.media.tumblr.com/tumblr_lltzgnHi5F1qzib3wo1_400.jpg\n')
+        elif difference > 2:
+            with open('memeCodes.txt', 'w') as f:
+                f.write('https://i.kym-cdn.com/entries/icons/mobile/000/029/959/Screen_Shot_2019-06-05_at_1.26.32_PM.jpg\n') #stonks
+        else:
+            with open('memeCodes.txt', 'w') as f:
+                f.write('https://memes.co.in/memes/update/uploads/2021/12/InShot_20211209_222013681.jpg\n') #rock weird face
+    
+    elif difference < 0:
+        redCount += 1
+        greenCount = 0
+        print("red",redCount)
+        if redCount == 3:
+            redCount = 0
+            with open('memeCodes.txt', 'w') as f:
+                f.write('https://i.imgur.com/i9JNNvJ.jpg\n')  #panic meme
+        elif difference < -2:
+            with open('memeCodes.txt', 'w') as f:
+                f.write('http://images7.memedroid.com/images/UPLOADED333/5fe0de2ad6e08.jpeg\n') #not stonks
+        else:
+            with open('memeCodes.txt', 'w') as f:
+                f.write('https://memes.co.in/memes/update/uploads/2021/12/InShot_20211209_222013681.jpg\n') #rock weird face
+    
+    elif difference == 0:
+        with open('memeCodes.txt', 'w') as f:
+                f.write('https://memes.co.in/memes/update/uploads/2021/12/InShot_20211209_222013681.jpg\n') #rock weird face
+
+
+    return time, open_price, close_price, high, low, greenCount, redCount'''
+
 def getData(greenCount, redCount):
 
     response = ws.recv()
@@ -38,43 +93,46 @@ def getData(greenCount, redCount):
     time = (open_time + close_time) /2
     
     difference = float(close_price) - float(open_price)
-    print(difference)
+    #print(difference)
+    greenCount = 0
+    redCount = 0
     if difference > 0:
         greenCount += 1
         redCount = 0
-        print("green",greenCount)
+        #print("green",greenCount)
         if greenCount == 3:
             greenCount = 0
-            with open('memeCodes.txt', 'w') as f:
-                f.write('3Green\n')
+            image_url = "http://29.media.tumblr.com/tumblr_lltzgnHi5F1qzib3wo1_400.jpg"
+            urllib.request.urlretrieve(image_url, "meme.png")
+            
         elif difference > 2:
-            with open('memeCodes.txt', 'w') as f:
-                f.write('bigGreen\n')
-        else:
-            with open('memeCodes.txt', 'w') as f:
-                f.write('blank\n')
+            image_url = "https://i.kym-cdn.com/entries/icons/mobile/000/029/959/Screen_Shot_2019-06-05_at_1.26.32_PM.jpg"
+            urllib.request.urlretrieve(image_url, "meme.png")
+        '''else:
+            image_url = "https://memes.co.in/memes/update/uploads/2021/12/InShot_20211209_222013681.jpg"
+            urllib.request.urlretrieve(image_url, "meme.png")'''
     
     elif difference < 0:
         redCount += 1
         greenCount = 0
-        print("red",redCount)
+        #print("red",redCount)
         if redCount == 3:
             redCount = 0
-            with open('memeCodes.txt', 'w') as f:
-                f.write('3Red\n')   
+            image_url = "https://i.imgur.com/i9JNNvJ.jpg"
+            urllib.request.urlretrieve(image_url, "meme.png")
         elif difference < -2:
-            with open('memeCodes.txt', 'w') as f:
-                f.write('bigRed\n')
-        else:
-            with open('memeCodes.txt', 'w') as f:
-                f.write('blank\n')
+            image_url = "http://images7.memedroid.com/images/UPLOADED333/5fe0de2ad6e08.jpeg"
+            urllib.request.urlretrieve(image_url, "meme.png")
+        '''else:
+            image_url = "https://memes.co.in/memes/update/uploads/2021/12/InShot_20211209_222013681.jpg"
+            urllib.request.urlretrieve(image_url, "meme.png")'''
     
     elif difference == 0:
-        with open('memeCodes.txt', 'w') as f:
-                f.write('crazyMeme\n')
-
+        image_url = "https://memes.co.in/memes/update/uploads/2021/12/InShot_20211209_222013681.jpg"
+        urllib.request.urlretrieve(image_url, "meme.png")
 
     return time, open_price, close_price, high, low, greenCount, redCount
+
 
 def csvApp(time, open_price, close_price, high, low):
     dict = {'Time':time, 'Open' : open_price, 'Close' : close_price ,'High' : high ,'Low' : low}
@@ -86,16 +144,16 @@ def csvApp(time, open_price, close_price, high, low):
 
         f_object.close()
 
-for i in range(30):
+for i in range(100):
     time, open_price, close_price, high, low, greenCount, redCount= getData(greenCount, redCount)
     csvApp(time, open_price, close_price, high, low)
 
 def csvPop():
     data = pd.read_csv('candle.csv')
-    print(data)
+    #print(data)
     #minTime = data[data.Time == min(data.Time)]
     data = data[data.index != 0]
-    print(data)
+    #print(data)
     data.to_csv('candle.csv', index = False)
 
 while True:

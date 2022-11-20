@@ -7,6 +7,8 @@ col1= "red"
 col2 = "green"
 
 
+
+
 def candle(i):
     data = pd.read_csv('candle.csv')
 
@@ -20,7 +22,8 @@ def candle(i):
     up = prices[prices.close >= prices.open]
     down = prices[prices.close < prices.open]
 
-
+    top = prices[prices.high == max(prices.high)]
+    bot = prices[prices.low == max(prices.low)]
 
     plt.cla()
     
@@ -32,8 +35,8 @@ def candle(i):
     plt.bar(down.index,down.high-down.open,w2,bottom = down.open, color = col1)
     plt.bar(down.index,down.low-down.close,w2,bottom = down.close, color = col1)
 
-    #plt.bar(0,1,0,bottom = 16800)
-    #plt.bar(0,1,0,bottom = 17000)
+    plt.bar(0,1,0,bottom = top.high + 1)
+    plt.bar(0,1,0,bottom = bot.low - 3)
     plt.savefig('candles.png')
     
     
