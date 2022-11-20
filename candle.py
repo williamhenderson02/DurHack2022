@@ -40,7 +40,7 @@ w2= 0.03
 
 #print(prices)
 
-plt.figure(figsize =(8,4))
+plt.figure(figsize =(10,6))
 
 candleAni = FuncAnimation(plt.gcf(),candle,interval = 1000)
 

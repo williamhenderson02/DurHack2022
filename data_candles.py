@@ -1,7 +1,8 @@
 from websocket import create_connection
 import json
 from time import sleep
-from csv import DictWriter,writer
+from csv import DictWriter,writer,reader
+import pandas as pd
 
 ws = create_connection("wss://stream.binance.com:9443/ws/Bitcoin")
 
@@ -19,9 +20,7 @@ with open('candle.csv', 'w', encoding='UTF8', newline='') as f:
     writer.writerow(fieldNames)
     f.close()
 
-while True:
-    
-    values = []
+def getData():
 
     response = ws.recv()
     data = json.loads(response)
@@ -33,9 +32,11 @@ while True:
     close_price = kline["c"]
     high = kline["h"]
     low = kline["l"]
-
     time = (open_time + close_time) /2
 
+    return time, open_price, close_price, high, low
+
+def csvApp(time, open_price, close_price, high, low):
     dict = {'Time':time, 'Open' : open_price, 'Close' : close_price ,'High' : high ,'Low' : low}
     with open('candle.csv','a') as f_object:
  
@@ -44,5 +45,29 @@ while True:
         dictwriter_object.writerow(dict)
 
         f_object.close()
+
+for i in range(30):
+    time, open_price, close_price, high, low = getData()
+    csvApp(time, open_price, close_price, high, low)
+
+def csvPop():
+    data = pd.read_csv('candle.csv')
+    print(data)
+    #minTime = data[data.Time == min(data.Time)]
+    data = data[data.index != 0]
+    print(data)
+    data.to_csv('candle.csv', index = False)
+
+while True:
+
+    time, open_price, close_price, high, low = getData()
+    csvApp(time, open_price, close_price, high, low)
+    csvPop()
+
+    
+
+    
+
+    
     
     sleep(1)
